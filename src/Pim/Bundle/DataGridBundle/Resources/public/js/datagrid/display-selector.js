@@ -11,7 +11,7 @@ define([
     Backbone,
     __,
     BaseForm,
-    template
+    template,
 ) {
     return BaseForm.extend({
         className: 'AknGridToolbar-right AknDisplaySelector',
@@ -41,11 +41,9 @@ define([
         },
 
         setDisplayType(event) {
-            const type = this.$(event.target).data('type');
+            let type = this.$(event.target).data('type');
 
-            if ('default' === type)  {
-                return this.getRoot().trigger('grid:display-selector:reset');
-            }
+            if ('default' === type) type = null;
 
             return this.getRoot().trigger('grid:display-selector:change', type);
         },
