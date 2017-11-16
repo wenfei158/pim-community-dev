@@ -93,7 +93,7 @@ default:
                     - '@pim_catalog.validator.product_model'
                     - '@pim_catalog.saver.product_model'
                 - Pim\Behat\Context\Domain\Enrich\FamilyVariantConfigurationContext:
-                    - 'Context\FeatureContext'
+                    - 'Context\EnterpriseFeatureContext'
     extensions:
         Behat\ChainedStepsExtension: ~
         Behat\MinkExtension:
