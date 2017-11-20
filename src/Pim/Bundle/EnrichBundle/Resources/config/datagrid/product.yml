@@ -6,12 +6,9 @@ datagrid:
             displayTypes:
                 default:
                     label: List
-                thumbnail:
+                gallery:
                     label: Gallery
-                    displayHeader: false
-                    rowTemplate: oro/datagrid/product-row
-                    gridModifier: AknGrid--galleryView
-                    enabledColumns: [ identifier, image, label, completeness, complete_variant_products]
+                    rowView: oro/datagrid/product-row
         source:
             acl_resource:      pim_enrich_product_index
             type:              pim_datasource_product
