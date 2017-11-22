@@ -1125,6 +1125,69 @@ class DataGridContext extends PimContext implements PageObjectAware
         }
     }
 
+   /**
+     * @param string $typeLabel
+     *
+     * @Then /^I should see "([^"]*)" in the display dropdown$/
+     *
+     * @throws ExpectationException
+     */
+    public function iShouldSeeInTheDisplayDropdown($typeLabel)
+    {
+        return $this->spin(function () use ($typeLabel) {
+            return $this->getCurrentPage()->find('css',
+                sprintf('.AknDisplaySelector [data-toggle="dropdown"]:contains("%s")', $typeLabel)
+            );
+        }, sprintf('Display type %s is not selected', $typeLabel));
+    }
+
+    /**
+      * @param string $typeLabel
+      *
+      * @Then /^I should see the "([^"]*)" display in the datagrid$/
+      *
+      * @throws ExpectationException
+      */
+     public function iShouldSeeTheDisplayInTheDatagrid($typeLabel)
+     {
+         return $this->spin(function () use ($typeLabel) {
+             return $this->getCurrentPage()->find('css',
+                 sprintf('.AknGrid--%s', strtolower($typeLabel))
+             );
+         }, sprintf('Display type %s is not shown in the datagrid', $typeLabel));
+     }
+
+     /**
+       * @param string $typeLabel
+       *
+       * @Then /^I select the "([^"]*)" from the display dropdown$/
+       *
+       * @throws ExpectationException
+       */
+      public function iSelectTheDisplayType($typeLabel)
+      {
+           $displayDropdown = $this->spin(function () {
+               $toggle = $this->getCurrentPage()->find('css', '.AknDisplaySelector .AknActionButton[data-toggle="dropdown"]');
+
+               if (null !== $toggle) {
+                   if (!$toggle->getParent()->hasClass('open')) {
+                       $toggle->click();
+                   };
+
+                   return $toggle;
+               }
+           }, 'Display type dropdown button not found');
+
+           $dropdownMenu = $displayDropdown->getParent()->find('css', '.dropdown-menu, .AknDropdown-menu');
+
+           $dropdownItem = $this->spin(function () use ($dropdownMenu, $typeLabel) {
+               return $dropdownMenu->find('css', sprintf('.AknDropdown-menuLink:contains("%s")', $typeLabel));
+           }, sprintf('Display type "%s" not found in the dropdown', $typeLabel));
+
+           $dropdownItem->click();
+           $this->wait();
+      }
+
     /**
      * @param string $filterName
      * @param string $criteria
