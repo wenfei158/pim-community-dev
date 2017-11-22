@@ -55,7 +55,7 @@ define([
 
         /**
          * Receives the grid displayTypes config from the gridView and
-         * renders them.
+         * renders them (with translated labels);
          *
          * @param  {Backbone.Collection} collection The datagrid collection
          * @param  {Backbone.View} gridView   The datagrid view
@@ -65,6 +65,11 @@ define([
 
             if (undefined === displayTypes) {
                 return;
+            }
+
+            for (let display in displayTypes) {
+                const type = displayTypes[display];
+                type.label = __(type.label);
             }
 
             this.renderDisplayTypes(displayTypes);
@@ -101,12 +106,17 @@ define([
         renderDisplayTypes(types) {
             const firstType = Object.keys(types)[0];
             let selectedType = this.getStoredType();
+            const displayLabel = __('grid.display_selector.label');
 
             if (undefined === types[selectedType]) {
                 selectedType = firstType;
             }
 
-            this.$el.html(this.template({ types, selectedType }));
+            this.$el.html(this.template({
+                displayLabel,
+                types,
+                selectedType
+            }));
 
             return BaseForm.prototype.render.apply(this, arguments);
         }

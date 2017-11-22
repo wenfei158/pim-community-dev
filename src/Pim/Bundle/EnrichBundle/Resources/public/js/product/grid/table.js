@@ -41,8 +41,13 @@ define(
                 return BaseForm.prototype.initialize.apply(this, arguments);
             },
 
+            /**
+             * Returns the stored display type for the given grid
+             *
+             * @return {String}
+             */
             getStoredDisplayType() {
-                return localStorage.getItem(`display-selector:${this.config.gridName}`) || 'default';
+                return localStorage.getItem(`display-selector:${this.config.gridName}`);
             },
 
             /**
@@ -120,7 +125,7 @@ define(
                 const selectedType = this.getStoredDisplayType();
                 const gridName = this.config.gridName;
                 const metadata = _.clone(gridMetadata);
-                const displayTypes = metadata.options.displayTypes;
+                const displayTypes = metadata.options.displayTypes || {};
                 const displayType = displayTypes[selectedType];
 
                 if (selectedType === 'default' || undefined === displayType) {
