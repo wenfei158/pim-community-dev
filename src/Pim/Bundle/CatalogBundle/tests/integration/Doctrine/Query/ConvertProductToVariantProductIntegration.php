@@ -8,9 +8,9 @@ use Pim\Component\Catalog\Model\ProductModelInterface;
 use Pim\Component\Catalog\Model\VariantProductInterface;
 
 /**
- * Test the query function: Pim\Bundle\CatalogBundle\Doctrine\ORM\Query\TurnProductIntoVariantProduct
+ * Test the query function: Pim\Bundle\CatalogBundle\Doctrine\ORM\Query\ConvertProductToVariantProduct
  */
-final class TurnProductIntoVariantProductIntegration extends TestCase
+final class ConvertProductToVariantProductIntegration extends TestCase
 {
     /** @var ProductInterface */
     private $product;
@@ -63,18 +63,18 @@ final class TurnProductIntoVariantProductIntegration extends TestCase
     }
 
     /**
-     * To update product __invoke a variant product in database we need to check that:
+     * To update product into a variant product in database we need to check that:
      *   - the product type is well changed (data managed by doctrine)
      *   - the variant product keeps the product id
      *   - the repository returns the right object type (variant product instead of product)
      */
-    public function test query that turn product into variant product in database()
+    public function test query that converts product to variant product in database()
     {
         /** @var VariantProductInterface $inMemoryVariantProduct */
         $inMemoryVariantProduct = $this->get('pim_catalog.entity_with_family.create_variant_product_from_product')
             ->from($this->product, $this->productModel);
 
-        ($this->get('pim_catalog.doctrine.query.turn_product_into_variant_product'))($inMemoryVariantProduct);
+        ($this->get('pim_catalog.doctrine.query.convert_product_to_variant_product'))($inMemoryVariantProduct);
 
         /** @var VariantProductInterface $variantProduct */
         $variantProduct = $this->get('pim_catalog.repository.variant_product')->findOneByIdentifier('my-product');

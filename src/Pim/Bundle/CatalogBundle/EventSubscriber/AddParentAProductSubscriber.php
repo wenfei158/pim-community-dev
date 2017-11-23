@@ -9,7 +9,7 @@ use Pim\Component\Catalog\EntityWithFamily\Event\ParentWasAddedToProduct;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * When a product is turn into a variant product we need to update the database and change the object in the
+ * When a product is converted to a variant product we need to update the database and change the object in the
  * doctrine unit of work.
  *
  * @author    Arnaud Langlade <arnaud.langlade@akeneo.com>
@@ -18,17 +18,17 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AddParentAProductSubscriber implements EventSubscriberInterface
 {
-    /** @var Query\TurnProductIntoVariantProduct */
-    private $turnProductIntoVariantProduct;
+    /** @var Query\ConvertProductToVariantProduct */
+    private $convertProductToVariantProduct;
 
     /**
      * AddParentAProductSubscriber constructor.
      *
-     * @param Query\TurnProductIntoVariantProduct $turnProductIntoVariantProduct
+     * @param Query\ConvertProductToVariantProduct $convertProductToVariantProduct
      */
-    public function __construct(Query\TurnProductIntoVariantProduct $turnProductIntoVariantProduct)
+    public function __construct(Query\ConvertProductToVariantProduct $convertProductToVariantProduct)
     {
-        $this->turnProductIntoVariantProduct = $turnProductIntoVariantProduct;
+        $this->convertProductToVariantProduct = $convertProductToVariantProduct;
     }
 
     /**
@@ -37,15 +37,15 @@ class AddParentAProductSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ParentWasAddedToProduct::EVENT_NAME => 'turnProductIntoVariantProduct'
+            ParentWasAddedToProduct::EVENT_NAME => 'convertProductToVariantProduct'
         ];
     }
 
     /**
      * @param ParentWasAddedToProduct $event
      */
-    public function turnProductIntoVariantProduct(ParentWasAddedToProduct $event): void
+    public function convertProductToVariantProduct(ParentWasAddedToProduct $event): void
     {
-        ($this->turnProductIntoVariantProduct)($event->convertedProduct());
+        ($this->convertProductToVariantProduct)($event->convertedProduct());
     }
 }

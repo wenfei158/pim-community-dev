@@ -12,9 +12,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AddParentAProductSubscriberSpec extends ObjectBehavior
 {
-    function let(Query\TurnProductIntoVariantProduct $turnProductIntoVariantProduct)
+    function let(Query\ConvertProductToVariantProduct $convertProductToVariantProduct)
     {
-        $this->beConstructedWith($turnProductIntoVariantProduct);
+        $this->beConstructedWith($convertProductToVariantProduct);
     }
 
     function it is initializable()
@@ -30,18 +30,18 @@ class AddParentAProductSubscriberSpec extends ObjectBehavior
     function it subscribes to event()
     {
         $this->getSubscribedEvents()->shouldReturn([
-            ParentWasAddedToProduct::EVENT_NAME => 'turnProductIntoVariantProduct'
+            ParentWasAddedToProduct::EVENT_NAME => 'convertProductToVariantProduct'
         ]);
     }
 
-    function it turns a product into a variant product(
-        $turnProductIntoVariantProduct,
+    function it converts a product to a variant product(
+        $convertProductToVariantProduct,
         ParentWasAddedToProduct $event,
         VariantProductInterface $variantProduct
     ) {
         $event->convertedProduct()->willReturn($variantProduct);
-        $turnProductIntoVariantProduct->__invoke($variantProduct)->shouldBeCalled();
+        $convertProductToVariantProduct->__invoke($variantProduct)->shouldBeCalled();
 
-        $this->turnProductIntoVariantProduct($event)->shouldReturn(null);
+        $this->convertProductToVariantProduct($event)->shouldReturn(null);
     }
 }

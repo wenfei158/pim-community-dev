@@ -103,30 +103,6 @@ class VariantProduct extends AbstractProduct implements VariantProductInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function setGroups(Collection $groups): void
-    {
-        $this->groups = $groups;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCategories(Collection $categories): void
-    {
-        $this->categories = $categories;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUniqueData(Collection $data): void
-    {
-        $this->uniqueData = $data;
-    }
-
-    /**
      * @param EntityWithFamilyVariantInterface $entity
      * @param ValueCollectionInterface         $valueCollection
      *

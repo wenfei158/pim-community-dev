@@ -14,18 +14,4 @@ use Doctrine\Common\Collections\Collection;
  */
 interface VariantProductInterface extends ProductInterface, EntityWithFamilyVariantInterface
 {
-    /**
-     * @param Collection $groups
-     */
-    public function setGroups(Collection $groups): void;
-
-    /**
-     * @param Collection $categories
-     */
-    public function setCategories(Collection $categories): void;
-
-    /**
-     * @param $data Collection
-     */
-    public function setUniqueData(Collection $data): void;
 }

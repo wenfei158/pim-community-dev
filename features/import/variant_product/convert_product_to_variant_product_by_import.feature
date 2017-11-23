@@ -2,7 +2,7 @@
 Feature: Import variant products that were previously products
   In order to import my variant products
   As a catalog manager
-  I need to be able to turn a product into a variant product
+  I need to be able to convert a product to a variant product
 
   Background:
     Given the "catalog_modeling" catalog configuration
@@ -19,7 +19,7 @@ Feature: Import variant products that were previously products
       | nin-s       | clothing |       | s    | Nine Inch Nails tee         | 100% cotton |          |
     And I am logged in as "Julia"
 
-  Scenario: Turn a product into a variant product inside a family variant with 2 levels of hierarchy
+  Scenario: Converting a product to a variant product inside a family variant with 2 levels of hierarchy
     Given the following CSV file to import:
       """
       sku;parent
@@ -32,7 +32,7 @@ Feature: Import variant products that were previously products
     And I wait for the "csv_catalog_modeling_product_import" job to finish
     Then the parent of "col-white-m" should be "model-col-white"
 
-  Scenario: Turn a product into a variant product inside a family variant with 1 levels of hierarchy
+  Scenario: Converting a product to a variant product inside a family variant with 1 levels of hierarchy
     Given the following CSV file to import:
       """
       sku;parent
@@ -45,7 +45,7 @@ Feature: Import variant products that were previously products
     And I wait for the "csv_catalog_modeling_product_import" job to finish
     Then the parent of "nin-s" should be "model-nin"
 
-  Scenario: Turning a product into a variant product overwrites the values already defined in its ancestry
+  Scenario: Converting a product to a variant product overwrites the values already defined in its ancestry
     Given the following CSV file to import:
       """
       sku;parent
@@ -60,7 +60,7 @@ Feature: Import variant products that were previously products
       | description-en_US-ecommerce | Magnificent Cult of Luna t-shirt |
       | composition                 | cotton 90%, viscose 10%          |
 
-  Scenario: Turning a product into a variant product overwrites the empty or non defined values in its ancestry
+  Scenario: Converting a product to a variant product overwrites the empty or non defined values in its ancestry
     Given the following CSV file to import:
       """
       sku;parent
