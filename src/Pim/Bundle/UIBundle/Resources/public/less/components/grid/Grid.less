@@ -2,6 +2,7 @@
 
 .AknGrid {
   @miniPadding: 2px;
+  @fullImageHeight: 200px;
 
   font-size: @AknDefaultFontSize;
   width: 100%;
@@ -270,8 +271,8 @@
 
   &-fullImage {
     width: 100%;
-    height: 200px;
-    min-height: 200px;
+    height: @fullImageHeight;
+    min-height: @fullImageHeight;
     background-size: cover;
     background-position: 50%;
     margin-bottom: 16px;
@@ -280,7 +281,7 @@
     &:before {
       content: '';
       width: 100%;
-      height: 200px;
+      height: @fullImageHeight;
       background: @AknDarkBlue;
       position: absolute;
       top: 0;

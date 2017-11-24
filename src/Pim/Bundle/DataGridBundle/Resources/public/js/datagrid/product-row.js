@@ -1,5 +1,5 @@
 /*
-* This module renders a custom 'gallery' view for a product in a datagrid.
+* This module is a custom row for a product in the datagrid.
 *
 * @author    Tamara Robichet <tamara.robichet@akeneo.com>
 * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -28,6 +28,31 @@ define(
             tagName: 'div',
             rowTemplate: _.template(rowTemplate),
             thumbnailTemplate: _.template(thumbnailTemplate),
+
+            /**
+             * {@inheritdoc}
+             */
+            render() {
+                const label = this.model.get('label');
+                const isProductModel = this.isProductModel();
+                const row = $(this.rowTemplate({ isProductModel, label }));
+
+                const thumbnail = this.thumbnailTemplate({
+                    isProductModel,
+                    label,
+                    identifier: this.model.get('identifier'),
+                    imagePath: this.getThumbnailImagePath()
+                });
+
+                row.empty().append(thumbnail);
+                this.renderCells(row);
+                this.$el.empty().html(row);
+
+                row.on('click', this.onClick.bind(this));
+                row.on('change', 'input[type="checkbox"]', this.setCheckedClass.bind(this, row));
+
+                return this.delegateEvents();
+            },
 
             /**
              * Returns true if the model is a product model
@@ -81,31 +106,6 @@ define(
                 });
 
                 cells.forEach(cell => row.append(cell.render().el));
-            },
-
-            /**
-             * {@inheritdoc}
-             */
-            render() {
-                const label = this.model.get('label');
-                const isProductModel = this.isProductModel();
-                const row = $(this.rowTemplate({ isProductModel, label }));
-
-                const thumbnail = this.thumbnailTemplate({
-                    isProductModel,
-                    label,
-                    identifier: this.model.get('identifier'),
-                    imagePath: this.getThumbnailImagePath()
-                });
-
-                row.empty().append(thumbnail);
-                this.renderCells(row);
-                this.$el.empty().html(row);
-
-                row.on('click', this.onClick.bind(this));
-                row.on('change', 'input[type="checkbox"]', this.setCheckedClass.bind(this, row));
-
-                return this.delegateEvents();
             }
         });
     });

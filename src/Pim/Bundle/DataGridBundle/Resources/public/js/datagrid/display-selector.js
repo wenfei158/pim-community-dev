@@ -24,7 +24,7 @@ define([
     Routing
 ) {
     return BaseForm.extend({
-        className: 'AknGridToolbar-right AknDropdown AknDropdown--toolbar AknDisplaySelector',
+        className: 'AknGridToolbar-right AknDropdown AknDropdown--left AknDisplaySelector AknButtonList',
         gridName: null,
         template: _.template(template),
         events: {
