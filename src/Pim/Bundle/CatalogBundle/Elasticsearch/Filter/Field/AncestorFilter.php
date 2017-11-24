@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Pim\Bundle\CatalogBundle\Elasticsearch\Filter\Field;
 
 use Akeneo\Component\StorageUtils\Repository\IdentifiableObjectRepositoryInterface;
-use Pim\Bundle\DataGridBundle\Normalizer\IdEncoder;
 use Pim\Component\Catalog\Exception\InvalidOperatorException;
 use Pim\Component\Catalog\Exception\ObjectNotFoundException;
 use Pim\Component\Catalog\Query\Filter\FieldFilterHelper;
 use Pim\Component\Catalog\Repository\ProductModelRepositoryInterface;
-use Pim\Component\Catalog\Repository\ProductRepositoryInterface;
 
 /**
- * An ancestor is either a parent or a grand parent.
+ * An ancestor is a product model that is either a parent or a grand parent.
  *
  * @author    Samir Boulil <samir.boulil@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -27,21 +25,15 @@ class AncestorFilter extends AbstractFieldFilter
     /** @var IdentifiableObjectRepositoryInterface */
     private $productModelRepository;
 
-    /** @var IdentifiableObjectRepositoryInterface */
-    private $productRepository;
-
     /**
      * @param ProductModelRepositoryInterface $productModelRepository
-     * @param ProductRepositoryInterface      $productRepository
      * @param array                           $supportedOperators
      */
     public function __construct(
         ProductModelRepositoryInterface $productModelRepository,
-        ProductRepositoryInterface $productRepository,
         array $supportedOperators
     ) {
         $this->productModelRepository = $productModelRepository;
-        $this->productRepository = $productRepository;
         $this->supportedOperators = $supportedOperators;
     }
 
@@ -106,7 +98,7 @@ class AncestorFilter extends AbstractFieldFilter
             FieldFilterHelper::checkString(self::ANCESTOR_ID_ES_FIELD, $value, static::class);
             if (!$this->isValidId($value)) {
                 throw new ObjectNotFoundException(
-                    sprintf('Object "product model" or "product" with code "%s" does not exist', $value)
+                    sprintf('Object "product model" with ID "%s" does not exist', $value)
                 );
             }
         }
@@ -119,12 +111,8 @@ class AncestorFilter extends AbstractFieldFilter
      */
     private function isValidId(string $value): bool
     {
-        $id = IdEncoder::decode($value)['id'];
-        if (null === $this->productModelRepository->findOneBy(['id' => $id]) &&
-            null === $this->productRepository->findOneBy(['id' => $id])) {
-            return false;
-        }
+        $id = str_replace('product_model_', '', $value);
 
-        return true;
+        return null !== $this->productModelRepository->findOneBy(['id' => $id]);
     }
 }

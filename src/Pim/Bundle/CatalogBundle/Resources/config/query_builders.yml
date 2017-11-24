@@ -330,7 +330,6 @@ services:
         class: '%pim_catalog.query.elasticsearch.filter.ancestor.class%'
         arguments:
             - '@pim_catalog.repository.product_model'
-            - '@pim_catalog.repository.product'
             - ['IN']
         tags:
             - { name: 'pim_catalog.elasticsearch.query.product_and_product_model_filter', priority: 30 }

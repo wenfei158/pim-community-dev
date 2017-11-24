@@ -1,8 +1,8 @@
 @javascript
-Feature: Edit common attributes of many products at once
-  In order to update many products with the same information
+Feature: Count products during a mass edit
+  In order to understand the impacts of my selection during a mass edit
   As a product manager
-  I need to be able to edit common attributes of many products at once
+  I need to know the numbers of products that are really impacted by my selection
 
   Background:
     Given a "catalog_modeling" catalog configuration

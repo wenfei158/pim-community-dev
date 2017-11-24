@@ -12,15 +12,13 @@ use Pim\Component\Catalog\Model\ProductModelInterface;
 use Pim\Component\Catalog\Query\Filter\FieldFilterInterface;
 use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Repository\ProductModelRepositoryInterface;
-use Pim\Component\Catalog\Repository\ProductRepositoryInterface;
 
 class AncestorFilterSpec extends ObjectBehavior
 {
     public function let(
-        ProductModelRepositoryInterface $productModelRepository,
-        ProductRepositoryInterface $productRepository
+        ProductModelRepositoryInterface $productModelRepository
     ) {
-        $this->beConstructedWith($productModelRepository, $productRepository, [Operators::IN_LIST]);
+        $this->beConstructedWith($productModelRepository, [Operators::IN_LIST]);
     }
 
     function it_is_initializable()
@@ -114,21 +112,19 @@ class AncestorFilterSpec extends ObjectBehavior
         )->during('addFieldFilter', ['parent', Operators::IN_LIST, 'wrong_value', null, null, []]);
     }
 
-    function it_throws_an_exception_if_the_value_is_not_a_product_model_nor_a_product_id(
+    function it_throws_an_exception_if_the_value_is_not_a_product_model_id(
         $productModelRepository,
-        $productRepository,
         SearchQueryBuilder $sqb
     ) {
         $this->setQueryBuilder($sqb);
 
-        $productModelRepository->findOneBy(['id' => 0])->willReturn(null);
-        $productRepository->findOneBy(['id' => 0])->willReturn(null);
+        $productModelRepository->findOneBy(['id' => 'invalid_identifier'])->willReturn(null);
 
         $sqb->addFilter()->shouldNotBeCalled();
 
         $this->shouldThrow(
             new ObjectNotFoundException(
-                'Object "product model" or "product" with code "invalid_identifier" does not exist'
+                'Object "product model" with ID "invalid_identifier" does not exist'
             )
         )->during('addFieldFilter', ['ancestor.id', Operators::IN_LIST, ['invalid_identifier'], null, null, []]);
     }
