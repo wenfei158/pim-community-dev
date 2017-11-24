@@ -30,8 +30,10 @@ Feature: Datagrid display
     And I am on the products grid
     Then I should see the "Gallery" display in the datagrid
 
-  # Scenario: Successfully keep filters after switching display type
-  # Scenario: Successfully keep pagination after switching display type
-  # Scenario: Successfully keep row sorting after switching display type
-  # Scenario: Successfully hide the column selector for gallery display type
+  Scenario: Successfully hide the column selector for gallery display type
+    Given I am on the products grid
+    And I select the "Gallery" from the display dropdown
+    Then I should not see the text "Columns"
+    Then I select the "List" from the display dropdown
+    And I should see the text "Columns"
 
