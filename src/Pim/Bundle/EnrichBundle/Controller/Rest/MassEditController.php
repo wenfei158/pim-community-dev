@@ -4,6 +4,7 @@ namespace Pim\Bundle\EnrichBundle\Controller\Rest;
 
 use Oro\Bundle\DataGridBundle\Extension\MassAction\MassActionParametersParser;
 use Pim\Bundle\DataGridBundle\Adapter\GridFilterAdapterInterface;
+use Pim\Bundle\DataGridBundle\Adapter\ItemsCounter;
 use Pim\Bundle\EnrichBundle\MassEditAction\Operation\MassEditOperation;
 use Pim\Bundle\EnrichBundle\MassEditAction\OperationJobLauncher;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
@@ -34,35 +35,34 @@ class MassEditController
     /** @var ConverterInterface */
     protected $operationConverter;
 
-    /** @var SelectedForMassEditInterface */
-    private $selectedForMassEdit;
+    /** @var ItemsCounter */
+    protected $itemsCounter;
 
     /**
-     * @param MassActionParametersParser          $parameterParser
-     * @param GridFilterAdapterInterface          $filterAdapter
-     * @param OperationJobLauncher                $operationJobLauncher
-     * @param ConverterInterface                  $operationConverter
-     * @param ProductModelRepositoryInterface     $productModelRepository
-     * @param ProductQueryBuilderFactoryInterface $productAndProductModelQueryBuilderFactory
-     * @param ProductQueryBuilderFactoryInterface $productQueryBuilderFactory
-     * @param SelectedForMassEditInterface        $selectedForMassEdit
+     * @param MassActionParametersParser $parameterParser
+     * @param GridFilterAdapterInterface $filterAdapter
+     * @param OperationJobLauncher       $operationJobLauncher
+     * @param ConverterInterface         $operationConverter
+     * @param ItemsCounter               $itemsCounter
      */
     public function __construct(
         MassActionParametersParser $parameterParser,
         GridFilterAdapterInterface $filterAdapter,
         OperationJobLauncher $operationJobLauncher,
         ConverterInterface $operationConverter,
-        SelectedForMassEditInterface $selectedForMassEdit
+        ItemsCounter $itemsCounter
     ) {
         $this->parameterParser      = $parameterParser;
         $this->filterAdapter        = $filterAdapter;
         $this->operationJobLauncher = $operationJobLauncher;
         $this->operationConverter   = $operationConverter;
-        $this->selectedForMassEdit = $selectedForMassEdit;
+        $this->itemsCounter = $itemsCounter;
     }
 
     /**
      * Get filters from datagrid request
+     *
+     * @param Request $request
      *
      * @return JsonResponse
      */
@@ -70,13 +70,20 @@ class MassEditController
     {
         $parameters = $this->parameterParser->parse($request);
         $filters = $this->filterAdapter->adapt($parameters);
-        $filters['products_count'] = $this->selectedForMassEdit->findImpactedProducts($filters);
+        $itemsCount = $this->itemsCounter->count($parameters['gridName'], $filters);
 
-        return new JsonResponse($filters);
+        return new JsonResponse(
+            [
+                'filters'    => $filters,
+                'itemsCount' => $itemsCount
+            ]
+        );
     }
 
     /**
      * Launch mass edit action
+     *
+     * @param Request $request
      *
      * @return JsonResponse
      */

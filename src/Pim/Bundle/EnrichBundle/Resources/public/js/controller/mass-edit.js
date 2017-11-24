@@ -33,8 +33,9 @@ define(
 
                 return $.ajax({
                     url: Routing.generate('pim_enrich_mass_edit_rest_get_filter') + query
-                }).then((filters) => {
-                    const itemsCount = filters.products_count;
+                }).then((response) => {
+                    const filters = response.filters;
+                    const itemsCount = response.itemsCount;
 
                     return FormBuilder.build('pim-mass-' + actionName).then((form) => {
                         form.setData({
