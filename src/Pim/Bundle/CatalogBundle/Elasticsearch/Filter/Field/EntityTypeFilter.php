@@ -80,7 +80,7 @@ class EntityTypeFilter extends AbstractFieldFilter implements FieldFilterInterfa
      *
      * @throws InvalidPropertyTypeException
      */
-    private function checkValue($field, $value)
+    private function checkValue($field, $value): void
     {
         FieldFilterHelper::checkString($field, $value, static::class);
     }

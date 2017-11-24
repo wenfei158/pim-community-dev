@@ -30,11 +30,6 @@ class EntityTypeFilterSpec extends ObjectBehavior
         $this->shouldImplement(FieldFilterInterface::class);
     }
 
-    function it_is_inherits_abstract_field_filter()
-    {
-        $this->shouldBeAnInstanceOf(AbstractFieldFilter::class);
-    }
-
     function it_supports_the_entity_type_only()
     {
         $this->supportsField('entity_type')->shouldReturn(true);
@@ -83,7 +78,7 @@ class EntityTypeFilterSpec extends ObjectBehavior
         $this->addFieldFilter('entity_type', Operators::EQUALS, ProductModelInterface::class);
     }
 
-    function it_throws_if_the_sqb_is_not_initialized()
+    function it_throws_if_the_search_query_builder_is_not_initialized()
     {
         $this->shouldThrow(
             new \LogicException('The search query builder is not initialized in the filter.')

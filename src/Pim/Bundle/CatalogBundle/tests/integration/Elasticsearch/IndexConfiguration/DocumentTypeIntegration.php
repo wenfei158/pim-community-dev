@@ -14,7 +14,7 @@ use Pim\Component\Catalog\Model\ProductModelInterface;
  */
 class DocumentTypeIntegration extends AbstractPimCatalogTestCase
 {
-    public function test_operator_equals_product_models()
+    public function it_tests_the_equals_operator_on_product_models()
     {
         $documentType = str_replace('\\', '\\\\', ProductModelInterface::class);
         $query = [
@@ -34,14 +34,13 @@ class DocumentTypeIntegration extends AbstractPimCatalogTestCase
             ],
         ];
         $documentsFound = $this->getSearchQueryResults($query);
-        $this->assertCount(4, $documentsFound);
         $this->assertDocument(
             $documentsFound,
             ['model-tshirt', 'model-tshirt-blue', 'model-tshirt-white', 'model-tshirt-red']
         );
     }
 
-    public function test_operator_equals_products()
+    public function it_tests_the_equals_operator_on_products()
     {
         $documentType = str_replace('\\', '\\\\', ProductInterface::class);
         $query = [
@@ -61,7 +60,6 @@ class DocumentTypeIntegration extends AbstractPimCatalogTestCase
             ],
         ];
         $documentsFound = $this->getSearchQueryResults($query);
-        $this->assertCount(9, $documentsFound);
         $this->assertDocument(
             $documentsFound,
             [

@@ -27,7 +27,4 @@ class EntityTypeFilterIntegration extends AbstractProductAndProductModelQueryBui
         $result = $this->executeFilter([['entity_type', Operators::EQUALS, ProductModelInterface::class]]);
         $this->assertEquals(80, $result->count());
     }
-
-    # get all variant product children of root product model
-    # get all variant product children of sub product model
 }
