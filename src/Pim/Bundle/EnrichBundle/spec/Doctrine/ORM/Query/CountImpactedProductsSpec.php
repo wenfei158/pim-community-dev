@@ -9,7 +9,7 @@ use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
 use Pim\Component\Catalog\Query\ProductQueryBuilderInterface;
 
-class SelectedForMassEditSpec extends ObjectBehavior
+class CountImpactedProductsSpec extends ObjectBehavior
 {
     function let(
         ProductQueryBuilderFactoryInterface $productAndProductModelQueryBuilderFactory,
@@ -37,7 +37,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
 
         $productAndProductModelQueryBuilderFactory->create()->shouldNotBeCalled();
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(2500);
+        $this->count($pqbFilters)->shouldReturn(2500);
     }
 
     public function it_returns_all_the_selected_products_count_when_a_user_selects_a_list_of_products(
@@ -60,7 +60,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
         $pqb->execute()->willReturn($countable);
         $countable->count()->willReturn(3);
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(3);
+        $this->count($pqbFilters)->shouldReturn(3);
     }
 
     public function it_returns_all_the_selected_variant_products_when_a_user_selects_a_product_model(
@@ -83,7 +83,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
         $pqb->execute()->willReturn($countable);
         $countable->count()->willReturn(10);
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(10);
+        $this->count($pqbFilters)->shouldReturn(10);
     }
 
     public function it_returns_all_the_selected_variant_products_when_a_user_selects_product_models_and_products(
@@ -110,7 +110,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
         $pqb->execute()->willReturn($countable);
         $countable->count()->willReturn(10);
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(10);
+        $this->count($pqbFilters)->shouldReturn(10);
     }
 
     public function it_substracts_the_product_catalog_count_to_the_selected_entities_when_a_user_selects_all_and_unchecks(
@@ -140,7 +140,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
         $pqb->execute()->willReturn($countable2);
         $countable2->count()->willReturn(2500);
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(2498);
+        $this->count($pqbFilters)->shouldReturn(2498);
     }
 
     public function it_computes_when_a_user_selects_all_entities_with_other_filters(
@@ -187,6 +187,6 @@ class SelectedForMassEditSpec extends ObjectBehavior
 
         $productAndProductModelQueryBuilderFactory->create()->shouldNotBeCalled();
 
-        $this->findImpactedProducts($pqbFilters)->shouldReturn(12);
+        $this->count($pqbFilters)->shouldReturn(12);
     }
 }

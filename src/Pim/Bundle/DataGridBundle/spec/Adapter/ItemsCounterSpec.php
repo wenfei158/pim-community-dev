@@ -14,7 +14,7 @@ class ItemsCounterSpec extends ObjectBehavior
 
     function it_counts_items_in_the_product_grid($countImpactedProducts)
     {
-        $countImpactedProducts->findImpactedProducts(['filters'])->willReturn(42);
+        $countImpactedProducts->count(['filters'])->willReturn(42);
 
         $this->count('product-grid', ['filters'])->shouldReturn(42);
     }
