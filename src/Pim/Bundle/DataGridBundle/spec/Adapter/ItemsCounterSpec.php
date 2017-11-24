@@ -3,18 +3,18 @@
 namespace spec\Pim\Bundle\DataGridBundle\Adapter;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Component\Enrich\Query\SelectedForMassEditInterface;
+use Pim\Bundle\EnrichBundle\Doctrine\ORM\Query\CountImpactedProducts;
 
 class ItemsCounterSpec extends ObjectBehavior
 {
-    function let(SelectedForMassEditInterface $productsSelectedForMassEdit)
+    function let(CountImpactedProducts $countImpactedProducts)
     {
-        $this->beConstructedWith($productsSelectedForMassEdit);
+        $this->beConstructedWith($countImpactedProducts);
     }
 
-    function it_counts_items_in_the_product_grid($productsSelectedForMassEdit)
+    function it_counts_items_in_the_product_grid($countImpactedProducts)
     {
-        $productsSelectedForMassEdit->findImpactedProducts(['filters'])->willReturn(42);
+        $countImpactedProducts->findImpactedProducts(['filters'])->willReturn(42);
 
         $this->count('product-grid', ['filters'])->shouldReturn(42);
     }

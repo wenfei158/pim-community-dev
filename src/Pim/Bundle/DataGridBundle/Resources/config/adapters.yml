@@ -11,4 +11,4 @@ services:
     pim_datagrid.adapter.items_counter:
         class: '%pim_datagrid.adapter.items_counter.class%'
         arguments:
-            - '@pim_enrich.doctrine.query.selected_for_mass_edit'
+            - '@pim_enrich.doctrine.query.count_impacted_products'

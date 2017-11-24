@@ -209,8 +209,8 @@ class SelectedForMassEditIntegration extends TestCase
      */
     private function assertProductsCountInSelection(array $pqbFilters, int $expectedProductsCount): void
     {
-        $productsCount = $this->get('pim_enrich.doctrine.query.selected_for_mass_edit')
-            ->findImpactedProducts($pqbFilters);
+        $productsCount = $this->get('pim_enrich.doctrine.query.count_impacted_products')
+            ->count($pqbFilters);
         $this->assertEquals($expectedProductsCount, $productsCount);
     }
 }

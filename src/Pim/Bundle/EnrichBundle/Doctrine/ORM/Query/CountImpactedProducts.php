@@ -16,7 +16,7 @@ use Pim\Component\Enrich\Query\SelectedForMassEditInterface;
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class SelectedForMassEdit implements SelectedForMassEditInterface
+class CountImpactedProducts
 {
     /** @var ProductQueryBuilderFactoryInterface */
     private $productAndProductModelQueryBuilderFactory;
@@ -37,9 +37,14 @@ class SelectedForMassEdit implements SelectedForMassEditInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Depending on some pqb filters given, can determine the total number of products that are contained in
+     * this selection.
+     *
+     * @param array $filters
+     *
+     * @return int
      */
-    public function findImpactedProducts(array $filters): int
+    public function count(array $filters): int
     {
         $impactedProducts = $this->countImpactedProducts($filters);
 

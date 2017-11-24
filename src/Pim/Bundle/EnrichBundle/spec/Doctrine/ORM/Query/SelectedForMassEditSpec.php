@@ -3,7 +3,7 @@
 namespace spec\Pim\Bundle\EnrichBundle\Doctrine\ORM\Query;
 
 use PhpSpec\ObjectBehavior;
-use Pim\Bundle\EnrichBundle\Doctrine\ORM\Query\SelectedForMassEdit;
+use Pim\Bundle\EnrichBundle\Doctrine\ORM\Query\CountImpactedProducts;
 use Pim\Component\Catalog\Model\ProductInterface;
 use Pim\Component\Catalog\Query\Filter\Operators;
 use Pim\Component\Catalog\Query\ProductQueryBuilderFactoryInterface;
@@ -20,7 +20,7 @@ class SelectedForMassEditSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(SelectedForMassEdit::class);
+        $this->shouldHaveType(CountImpactedProducts::class);
     }
 
     function it_returns_the_catalog_products_count_when_a_user_selects_all_products_in_the_grid(

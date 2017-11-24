@@ -2,7 +2,7 @@
 
 namespace Pim\Bundle\DataGridBundle\Adapter;
 
-use Pim\Component\Enrich\Query\SelectedForMassEditInterface;
+use Pim\Bundle\EnrichBundle\Doctrine\ORM\Query\CountImpactedProducts;
 
 /**
  * Counts the number of items selected in the grid.
@@ -13,15 +13,15 @@ use Pim\Component\Enrich\Query\SelectedForMassEditInterface;
  */
 class ItemsCounter
 {
-    /** @var SelectedForMassEditInterface */
-    private $productsSelectedForMassEdit;
+    /** @var CountImpactedProducts */
+    private $countImpactedProducts;
 
     /**
-     * @param SelectedForMassEditInterface $productsSelectedForMassEdit
+     * @param CountImpactedProducts $countImpactedProducts
      */
-    public function __construct(SelectedForMassEditInterface $productsSelectedForMassEdit)
+    public function __construct(CountImpactedProducts $countImpactedProducts)
     {
-        $this->productsSelectedForMassEdit = $productsSelectedForMassEdit;
+        $this->countImpactedProducts = $countImpactedProducts;
     }
 
     /**
@@ -34,7 +34,7 @@ class ItemsCounter
     public function count(string $gridName, array $filters): int
     {
         if ($gridName === OroToPimGridFilterAdapter::PRODUCT_GRID_NAME) {
-            return $this->productsSelectedForMassEdit->findImpactedProducts($filters);
+            return $this->countImpactedProducts->count($filters);
         }
 
         if (!isset($filters[0]['value'])) {
