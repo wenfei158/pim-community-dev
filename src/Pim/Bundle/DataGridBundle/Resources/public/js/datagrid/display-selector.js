@@ -28,7 +28,7 @@ define([
         gridName: null,
         template: _.template(template),
         events: {
-            'click li': 'setDisplayType'
+            'click .AknDisplaySelector-item': 'setDisplayType'
         },
 
         /**
