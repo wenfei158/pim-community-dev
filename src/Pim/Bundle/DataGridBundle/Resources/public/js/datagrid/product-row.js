@@ -22,7 +22,7 @@ define(
         BaseRow,
         rowTemplate,
         thumbnailTemplate,
-        MediaUrlGenerator
+        mediaUrlGenerator
     ) {
         return BaseRow.extend({
             tagName: 'div',
@@ -85,7 +85,7 @@ define(
                     return '/media/show/undefined/preview';
                 }
 
-                return MediaUrlGenerator.getMediaShowUrl(image.filePath, 'thumbnail');
+                return mediaUrlGenerator.getMediaShowUrl(image.filePath, 'thumbnail');
             },
 
             /**
