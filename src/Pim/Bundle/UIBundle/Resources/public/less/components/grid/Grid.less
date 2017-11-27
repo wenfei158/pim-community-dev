@@ -171,23 +171,26 @@
   }
 
   &--gallery {
-    table {
+    & {
       display: block !important;
     }
 
-    thead,
     .AknActionButton.configure-columns {
       display: none;
     }
+  }
 
-    tbody {
-      margin-left: 40px;
-      margin-top: 20px;
-      display: flex;
-      display: grid;
-      grid-gap: 20px;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
-    }
+  &--gallery &-header {
+    display: none;
+  }
+
+  &--gallery &-body {
+    margin-left: 40px;
+    margin-top: 20px;
+    display: flex;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr) ) ;
   }
 
   & &-bodyRow:first-child &-bodyCell {
@@ -342,15 +345,6 @@
     overflow: visible;
     transition: background 0.4s ease-in;
 
-    .AknBadge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin-right: 10px;
-      margin-top: 10px;
-      z-index: 2;
-    }
-
     .AknGrid-bodyCell {
       padding: 0;
     }
@@ -371,9 +365,7 @@
       z-index: 2;
       max-width: 100%;
       margin-top: 4px;
-    }
-
-    .AknButtonList {
+      display: grid;
       justify-content: center;
     }
   }
@@ -382,19 +374,19 @@
     border-color: @AknDarkBlue;
     background: @AknDarkBlue;
     color: white;
+  }
 
-    .AknGrid-subTitle {
-      display: none;
-    }
+  &-bodyRow--thumbnail:hover &-subTitle {
+    display: none;
+  }
 
-    .AknGrid-bodyCell--actions {
-      width: 100%;
-      display: block;
-    }
+  &-bodyRow--thumbnail:hover &-bodyCell--actions {
+    width: 100%;
+    display: grid;
+  }
 
-    .AknGrid-fullImage:before {
-      opacity: 0.7;
-    }
+  &-bodyRow--thumbnail:hover &-fullImage {
+    opacity: 0.7;
   }
 
   &-bodyRow--selected {

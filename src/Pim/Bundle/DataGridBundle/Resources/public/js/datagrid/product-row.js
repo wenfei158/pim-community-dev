@@ -28,7 +28,6 @@ define(
             tagName: 'div',
             rowTemplate: _.template(rowTemplate),
             thumbnailTemplate: _.template(thumbnailTemplate),
-
             /**
              * {@inheritdoc}
              */
@@ -100,12 +99,23 @@ define(
              */
             renderCells(row) {
                 const type = this.getCompletenessCellType();
-                const columnNames = [type, 'massAction', ''];
-                const cells = this.cells.filter(cell => {
-                    return columnNames.includes(cell.column.get('name'));
-                });
+                const columnsToRender = [type, 'massAction', ''];
 
-                cells.forEach(cell => row.append(cell.render().el));
+                this.cells.forEach(cell => {
+                    const columnName = cell.column.get('name');
+
+                    if (false === columnsToRender.includes(columnName)) {
+                        return;
+                    }
+
+                    const cellElement = cell.render().el;
+
+                    if (columnName === type) {
+                        $(cellElement).addClass('AknBadge--topRight');
+                    }
+
+                    row.append(cellElement);
+                });
             }
         });
     });
