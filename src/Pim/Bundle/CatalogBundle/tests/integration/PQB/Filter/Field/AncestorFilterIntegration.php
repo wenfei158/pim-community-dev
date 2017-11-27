@@ -20,7 +20,6 @@ class AncestorFilterIntegration extends AbstractProductAndProductModelQueryBuild
         $this->assert(
             $result,
             [
-                'model-running-shoes',
                 'model-running-shoes-m',
                 'model-running-shoes-xxs',
                 'model-running-shoes-xxxl',
@@ -43,7 +42,6 @@ class AncestorFilterIntegration extends AbstractProductAndProductModelQueryBuild
         $this->assert(
             $result,
             [
-                'model-running-shoes-xxs',
                 'running-shoes-xxs-antique-white',
                 'running-shoes-xxs-navy-blue',
                 'running-shoes-xxs-crimson-red',
@@ -59,11 +57,9 @@ class AncestorFilterIntegration extends AbstractProductAndProductModelQueryBuild
         $this->assert(
             $result,
             [
-                'model-running-shoes-xxs',
                 'running-shoes-xxs-antique-white',
                 'running-shoes-xxs-navy-blue',
                 'running-shoes-xxs-crimson-red',
-                'model-braided-hat',
                 'braided-hat-m',
                 'braided-hat-xxxl',
             ]
