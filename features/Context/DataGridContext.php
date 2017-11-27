@@ -1134,11 +1134,7 @@ class DataGridContext extends PimContext implements PageObjectAware
       */
     public function iShouldSeeInTheDisplayDropdown($typeLabel)
     {
-        return $this->spin(function () use ($typeLabel) {
-            return $this->getCurrentPage()->find('css',
-                sprintf('.AknDisplaySelector [data-toggle="dropdown"]:contains("%s")', $typeLabel)
-            );
-        }, sprintf('Display type %s is not selected', $typeLabel));
+        return $this->getCurrentPage()->getDropdownButton($typeLabel);
     }
 
     /**
