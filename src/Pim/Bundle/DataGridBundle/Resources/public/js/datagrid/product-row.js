@@ -81,7 +81,7 @@ define(
             getThumbnailImagePath() {
                 const image = this.model.get('image');
 
-                if (null === image) {
+                if (undefined === image || null === image) {
                     return '/media/show/undefined/preview';
                 }
 

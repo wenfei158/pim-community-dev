@@ -134,7 +134,8 @@ define(
 
                 metadata.options.manageColumns = displayType.manageColumns;
                 metadata.options.rowView = displayType.rowView;
-                $(`#${gridName}`).addClass(`AknGrid--${selectedType}`);
+
+                $('#product-grid').addClass(`AknGrid--${selectedType}`);
 
                 return metadata;
             },
