@@ -123,7 +123,6 @@ define(
              */
             applyDisplayType(gridMetadata) {
                 const selectedType = this.getStoredDisplayType();
-                const gridName = this.config.gridName;
                 const metadata = Object.assign({}, gridMetadata);
                 const displayTypes = metadata.options.displayTypes || {};
                 const displayType = displayTypes[selectedType];
