@@ -74,15 +74,6 @@ define(
             },
 
             /**
-             * If the row contains a checked checkbox, set the selected class
-             * @param {HTMLElement} row
-             */
-            setCheckedClass(row) {
-                const isChecked = $('input[type="checkbox"]:checked', row).length;
-                row.toggleClass('AknGrid-bodyRow--selected', 1 === isChecked);
-            },
-
-            /**
              * Returns the 'thumbnail' size image path for a product OR the dummy image
              *
              * @return {String}
