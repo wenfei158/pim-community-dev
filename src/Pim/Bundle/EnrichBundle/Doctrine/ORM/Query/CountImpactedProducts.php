@@ -63,11 +63,25 @@ class CountImpactedProducts
     private function countImpactedProducts(array $filters): int
     {
         $ids = $this->extractIdsFromPqbFilters($filters);
+
         if (empty($ids)) {
             $attributeAndFieldFilters = $this->extractAttributeAndFieldFilters($filters);
-            $impactedProducts = $this->searchImpactedProducts($attributeAndFieldFilters);
-        } else {
-            $impactedProducts = $this->searchImpactedProductsInProductModelTrees($ids);
+
+            return $this->searchImpactedProducts($attributeAndFieldFilters);
+        }
+
+        $impactedProducts = 0;
+        $productModelIds = [];
+        foreach ($ids as $id) {
+            if (0 === strpos($id, 'product_model_')) {
+                $productModelIds[] = $id;
+            } else {
+                $impactedProducts++;
+            }
+        }
+
+        if (!empty($productModelIds)) {
+            $impactedProducts += $this->searchImpactedProductsInProductModelTrees($productModelIds);
         }
 
         return $impactedProducts;
