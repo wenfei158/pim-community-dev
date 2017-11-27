@@ -28,6 +28,7 @@ define(
             tagName: 'div',
             rowTemplate: _.template(rowTemplate),
             thumbnailTemplate: _.template(thumbnailTemplate),
+
             /**
              * {@inheritdoc}
              */
@@ -48,7 +49,10 @@ define(
                 this.$el.empty().html(row);
 
                 row.on('click', this.onClick.bind(this));
-                row.on('change', 'input[type="checkbox"]', this.setCheckedClass.bind(this, row));
+
+                this.listenTo(this.model, 'backgrid:selected', (model, checked) => {
+                    row.toggleClass('AknGrid-bodyRow--selected', checked);
+                });
 
                 return this.delegateEvents();
             },
