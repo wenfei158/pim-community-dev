@@ -56,11 +56,6 @@ class AncestorFilterSpec extends ObjectBehavior
                 [
                     'terms' => ['ancestors.ids' => ['product_model_1', 'product_model_2']],
                 ],
-                [
-                    'terms' => [
-                        'id' => ['product_model_1', 'product_model_2']
-                    ]
-                ]
             ]
         )->shouldBeCalled();
 

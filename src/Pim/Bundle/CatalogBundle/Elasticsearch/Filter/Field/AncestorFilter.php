@@ -12,6 +12,7 @@ use Pim\Component\Catalog\Repository\ProductModelRepositoryInterface;
 
 /**
  * An ancestor is a product model that is either a parent or a grand parent.
+ * Look for document having the given ancestor(s).
  *
  * @author    Samir Boulil <samir.boulil@akeneo.com>
  * @copyright 2017 Akeneo SAS (http://www.akeneo.com)
@@ -74,12 +75,7 @@ class AncestorFilter extends AbstractFieldFilter
                     'terms' => [
                         self::ANCESTOR_ID_ES_FIELD => $values,
                     ],
-                ],
-                [
-                    'terms' => [
-                        'id' => $values,
-                    ],
-                ],
+                ]
             ]
         );
     }
